@@ -1,0 +1,607 @@
+openapi: 3.0.0
+info:
+  description: This is a Jamaica Covid-19 information API
+  version: "v1"
+  title: Jamaica Covid-19 Information API
+servers:
+  - description: Localhost server
+    url: https://localhost:5000/covid19-jam/api/v1
+tags:
+  - name: covid19-jam-info
+    description: Jamaica Covid-19 information update
+paths:
+  /info:
+    get:
+      tags:
+        - covid19-jam-info
+      summary: Get Jamaican Covid-19 information from the Ministry of Health, Jamaica
+      operationId: handlers.info_handler.get_info
+      parameters:
+        - $ref: '#/components/parameters/dateParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/Info'
+        '400':
+          description: bad input parameter
+  /info/newCases:
+    get:
+      tags:
+        - covid19-jam-info
+      summary: Get Jamaican Covid-19 new cases information
+      operationId: handlers.info_handler.get_new_cases
+      parameters:
+        - $ref: '#/components/parameters/dateParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/NewCases'
+        '400':
+          description: bad input parameter
+  /info/sex-classification:
+    get:
+      tags:
+        - covid19-jam-info
+      summary: Get Jamaican Covid-19 sex classifaction information
+      operationId: handlers.info_handler.get_sex_classification
+      parameters:
+        - $ref: '#/components/parameters/dateParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/SexClassification'
+        '400':
+          description: bad input parameter
+  /info/age-range:
+    get:
+      tags:
+        - covid19-jam-info
+      summary: Get Jamaican Covid-19 age range information
+      operationId: handlers.info_handler.get_age_range
+      parameters:
+        - $ref: '#/components/parameters/dateParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/AgeRange'
+        '400':
+          description: bad input parameter
+  /info/parish-classification:
+    get:
+      tags:
+        - covid19-jam-info
+      summary: Get Jamaican Covid-19 parish classification information
+      operationId: handlers.info_handler.get_parish_classification
+      parameters:
+        - $ref: '#/components/parameters/dateParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/ParishClassification'
+        '400':
+          description: bad input parameter
+  /info/covid-testing:
+    get:
+      tags:
+        - covid19-jam-info
+      summary: Get Jamaican Covid-19 covid testing information
+      operationId: handlers.info_handler.get_covid_testing
+      parameters:
+        - $ref: '#/components/parameters/dateParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/CovidTesting'
+        '400':
+          description: bad input parameter
+  /info/deaths:
+    get:
+      tags:
+        - covid19-jam-info
+      summary: Get Jamaican Covid-19 deaths information
+      operationId: handlers.info_handler.get_deaths
+      parameters:
+        - $ref: '#/components/parameters/dateParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/Deaths'
+        '400':
+          description: bad input parameter
+  /info/recoveries:
+    get:
+      tags:
+        - covid19-jam-info
+      summary: Get Jamaican Covid-19 recoveries information
+      operationId: handlers.info_handler.get_recoveries
+      parameters:
+        - $ref: '#/components/parameters/dateParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/Recoveries'
+        '400':
+          description: bad input parameter
+  /info/quarantine:
+    get:
+      tags:
+        - covid19-jam-info
+      summary: Get Jamaican Covid-19 quarantine information
+      operationId: handlers.info_handler.get_quarantine
+      parameters:
+        - $ref: '#/components/parameters/dateParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/Quarantine'
+        '400':
+          description: bad input parameter
+  /info/hospital-management:
+    get:
+      tags:
+        - covid19-jam-info
+      summary: Get Jamaican Covid-19 hospital management information
+      operationId: handlers.info_handler.get_hospital_management
+      parameters:
+        - $ref: '#/components/parameters/dateParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/HospitalManagement'
+        '400':
+          description: bad input parameter
+  /info/non-hospital-isolation:
+    get:
+      tags:
+        - covid19-jam-info
+      summary: Get Jamaican Covid-19 non-hospital isolationt information
+      operationId: handlers.info_handler.get_non_hospital_isolation
+      parameters:
+        - $ref: '#/components/parameters/dateParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/NonHospitalIsolation'
+        '400':
+          description: bad input parameter
+  /info/transmission-status:
+    get:
+      tags:
+        - covid19-jam-info
+      summary: Get Jamaican Covid-19 transmission status information
+      operationId: handlers.info_handler.get_transmission_status
+      parameters:
+        - $ref: '#/components/parameters/dateParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/TransmissionStatus'
+        '400':
+          description: bad input parameter
+components:
+  responses:
+    Info:
+      description: search results matching criteria
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+              - lastRefreshed
+              - lastPostedDate
+              - infoDate
+            properties:
+              data:
+                type: object
+                allOf:
+                  - $ref: '#/components/schemas/NewCases'
+                  - $ref: '#/components/schemas/SexClassification'
+                  - $ref: '#/components/schemas/AgeRange'
+                  - $ref: '#/components/schemas/ParishClassification'
+                  - $ref: '#/components/schemas/CovidTesting'
+                  - $ref: '#/components/schemas/Deaths'
+                  - $ref: '#/components/schemas/Recoveries'
+                  - $ref: '#/components/schemas/Quarantine'
+                  - $ref: '#/components/schemas/HospitalManagement'
+                  - $ref: '#/components/schemas/NonHospitalIsolation'
+                  - $ref: '#/components/schemas/TransmissionStatus'
+              lastRefreshed:
+                type: string
+              lastPostedDate:
+                type: string
+              infoDate:
+                type: string
+    NewCases:
+      description: search results matching criteria
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+              - lastRefreshed
+              - lastPostedDate
+              - infoDate
+            properties:
+              data:
+                $ref: '#/components/schemas/NewCases'
+              lastRefreshed:
+                type: string
+              lastPostedDate:
+                type: string
+              infoDate:
+                type: string
+    SexClassification:
+      description: search results matching criteria
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+              - lastRefreshed
+              - lastPostedDate
+              - infoDate
+            properties:
+              data:
+                $ref: '#/components/schemas/SexClassification'
+              lastRefreshed:
+                type: string
+              lastPostedDate:
+                type: string
+              infoDate:
+                type: string
+    AgeRange:
+      description: search results matching criteria
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+              - lastRefreshed
+              - lastPostedDate
+              - infoDate
+            properties:
+              data:
+                $ref: '#/components/schemas/AgeRange'
+              lastRefreshed:
+                type: string
+              lastPostedDate:
+                type: string
+              infoDate:
+                type: string
+    ParishClassification:
+      description: search results matching criteria
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+              - lastRefreshed
+              - lastPostedDate
+              - infoDate
+            properties:
+              data:
+                $ref: '#/components/schemas/ParishClassification'
+              lastRefreshed:
+                type: string
+              lastPostedDate:
+                type: string
+              infoDate:
+                type: string
+    CovidTesting:
+      description: search results matching criteria
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+              - lastRefreshed
+              - lastPostedDate
+              - infoDate
+            properties:
+              data:
+                $ref: '#/components/schemas/CovidTesting'
+              lastRefreshed:
+                type: string
+              lastPostedDate:
+                type: string
+              infoDate:
+                type: string
+    Deaths:
+      description: search results matching criteria
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+              - lastRefreshed
+              - lastPostedDate
+              - infoDate
+            properties:
+              data:
+                $ref: '#/components/schemas/Deaths'
+              lastRefreshed:
+                type: string
+              lastPostedDate:
+                type: string
+              infoDate:
+                type: string
+    Recoveries:
+      description: search results matching criteria
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+              - lastRefreshed
+              - lastPostedDate
+              - infoDate
+            properties:
+              data:
+                $ref: '#/components/schemas/Recoveries'
+              lastRefreshed:
+                type: string
+              lastPostedDate:
+                type: string
+              infoDate:
+                type: string
+    Quarantine:
+      description: search results matching criteria
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+              - lastRefreshed
+              - lastPostedDate
+              - infoDate
+            properties:
+              data:
+                $ref: '#/components/schemas/Quarantine'
+              lastRefreshed:
+                type: string
+              lastPostedDate:
+                type: string
+              infoDate:
+                type: string
+    HospitalManagement:
+      description: search results matching criteria
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+              - lastRefreshed
+              - lastPostedDate
+              - infoDate
+            properties:
+              data:
+                $ref: '#/components/schemas/HospitalManagement'
+              lastRefreshed:
+                type: string
+              lastPostedDate:
+                type: string
+              infoDate:
+                type: string
+    NonHospitalIsolation:
+      description: search results matching criteria
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+              - lastRefreshed
+              - lastPostedDate
+              - infoDate
+            properties:
+              data:
+                $ref: '#/components/schemas/NonHospitalIsolation'
+              lastRefreshed:
+                type: string
+              lastPostedDate:
+                type: string
+              infoDate:
+                type: string
+    TransmissionStatus:
+      description: search results matching criteria
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+              - lastRefreshed
+              - lastPostedDate
+              - infoDate
+            properties:
+              data:
+                $ref: '#/components/schemas/TransmissionStatus'
+              lastRefreshed:
+                type: string
+              lastPostedDate:
+                type: string
+              infoDate:
+                type: string
+  schemas:
+    NewCases:
+      type: object
+      properties:
+        newCases:
+          type: object
+          properties:
+            confirmedCases:
+              $ref: '#/components/schemas/TimePeriod'
+    SexClassification:
+      type: object
+      properties:
+        sexClassification:
+          type: object
+          properties:
+            males:
+              $ref: '#/components/schemas/TimePeriod'
+            females:
+              $ref: '#/components/schemas/TimePeriod'
+            underInvestigation:
+              $ref: '#/components/schemas/TimePeriod'
+    AgeRange:
+      type: object
+      properties:
+        ageRange:
+          $ref: '#/components/schemas/TimePeriod'
+    ParishClassification:
+      type: object
+      properties:
+        parishClassification:
+          type: object
+          properties:
+            ksa:
+              $ref: '#/components/schemas/TimePeriod'
+            clarendon:
+              $ref: '#/components/schemas/TimePeriod'
+            stCatherine:
+              $ref: '#/components/schemas/TimePeriod'
+            stJames:
+              $ref: '#/components/schemas/TimePeriod'
+            hanover:
+              $ref: '#/components/schemas/TimePeriod'
+            portland:
+              $ref: '#/components/schemas/TimePeriod'
+            stMary:
+              $ref: '#/components/schemas/TimePeriod'
+            trelawny:
+              $ref: '#/components/schemas/TimePeriod'
+            stAnn:
+              $ref: '#/components/schemas/TimePeriod'
+            manchester:
+              $ref: '#/components/schemas/TimePeriod'
+            stElizabeth:
+              $ref: '#/components/schemas/TimePeriod'
+            westmoreland:
+              $ref: '#/components/schemas/TimePeriod'
+            stThomas:
+              $ref: '#/components/schemas/TimePeriod'
+    Deaths:
+      type: object
+      properties:
+        deaths:
+          type: object
+          properties:
+            deathCount:
+              $ref: '#/components/schemas/TimePeriod'
+            coincidentalDeaths:
+              $ref: '#/components/schemas/TimePeriod'
+            deathsUnderInvestigation:
+              $ref: '#/components/schemas/TimePeriod'
+    CovidTesting:
+      type: object
+      properties:
+        covidTesting:
+          type: object
+          properties:
+            positivesToday:
+              $ref: '#/components/schemas/CovidTestingTypesOfTests'
+            cumulativePositives:
+              $ref: '#/components/schemas/CovidTestingTypesOfTests'
+            negativeToday:
+              $ref: '#/components/schemas/CovidTestingTypesOfTests'
+            cumulativeNegatives:
+              $ref: '#/components/schemas/CovidTestingTypesOfTests'
+            totalTestsToday:
+              $ref: '#/components/schemas/CovidTestingTypesOfTests'
+            totalTestCumulative:
+              $ref: '#/components/schemas/CovidTestingTypesOfTests'
+    Recoveries:
+      type: object
+      properties:
+        recoveries:
+          type: object
+          properties:
+            recovered:
+              $ref: '#/components/schemas/TimePeriod'
+            active:
+              $ref: '#/components/schemas/TimePeriod'
+    Quarantine:
+      type: object
+      properties:
+        quarantine:
+          type: object
+          properties:
+            inFacility:
+              $ref: '#/components/schemas/TimePeriod'
+            inHome:
+              $ref: '#/components/schemas/TimePeriod'
+    HospitalManagement:
+      type: object
+      properties:
+        hospitalManagement:
+          type: object
+          properties:
+            numbHospitalized:
+              $ref: '#/components/schemas/TimePeriod'
+            patients:
+              type: object
+              properties:
+                moderately:
+                  $ref: '#/components/schemas/TimePeriod'
+                severely:
+                  $ref: '#/components/schemas/TimePeriod'
+                critical:
+                  $ref: '#/components/schemas/TimePeriod'
+    NonHospitalIsolation:
+      type: object
+      properties:
+        nonHospitalIsolation:
+          type: object
+          properties:
+            stepDownFacility:
+              $ref: '#/components/schemas/TimePeriod'
+            stateFacility:
+              $ref: '#/components/schemas/TimePeriod'
+            home:
+              $ref: '#/components/schemas/TimePeriod'
+    TransmissionStatus:
+      type: object
+      properties:
+        transmissionStatus:
+          type: object
+          properties:
+            contactOfConfirmedCase:
+              $ref: '#/components/schemas/TimePeriod'
+            imported:
+              $ref: '#/components/schemas/TimePeriod'
+            localTransmission:
+              $ref: '#/components/schemas/TimePeriod'
+            underInvestigation:
+              $ref: '#/components/schemas/TimePeriod'
+            workplace:
+              $ref: '#/components/schemas/TimePeriod'
+    TimePeriod:
+      type: object
+      properties:
+        24Hours:
+          type: string
+        overall:
+          type: string
+    CovidTestingTypesOfTests:
+      type: object
+      properties:
+        pcr:
+          type: string
+        publicAntigen:
+          type: string
+        privateAntigen:
+          type: string
+        total:
+          type: string
+  parameters:
+    dateParam:
+      in: query
+      name: date
+      schema:
+        type: string
+      required: true
+      examples:
+        date:
+          summary: Example to get info from a specific date
+          value: "2021-10-05"
+        latest:
+          summary: Example to get latest info
+          value: latest
