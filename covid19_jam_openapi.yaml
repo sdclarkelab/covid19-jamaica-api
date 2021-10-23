@@ -5,7 +5,9 @@ info:
   title: Jamaica Covid-19 Information API
 servers:
   - description: Localhost server
-    url: https://localhost:5000/covid19-jam/api/v1
+    url: https://localhost:5000/api/v1
+  - description: Live Server
+    url: https://api-covid-jamaica.herokuapp.com/api/v1
 tags:
   - name: covid19-jam-info
     description: Jamaica Covid-19 information update
